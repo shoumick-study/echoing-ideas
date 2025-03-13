@@ -15,7 +15,7 @@ export const samplePosts: Post[] = [
       name: 'Alex Johnson',
       avatar: '/placeholder.svg'
     },
-    image: '/placeholder.svg',
+    coverImage: '/placeholder.svg',
     readTime: '8 min read',
     slug: 'ethical-implications-ai-development'
   },
@@ -29,7 +29,7 @@ export const samplePosts: Post[] = [
       name: 'Maya Patel',
       avatar: '/placeholder.svg'
     },
-    image: '/placeholder.svg',
+    coverImage: '/placeholder.svg',
     readTime: '6 min read',
     slug: 'economic-models-post-pandemic'
   },
@@ -43,7 +43,7 @@ export const samplePosts: Post[] = [
       name: 'Thomas Wu',
       avatar: '/placeholder.svg'
     },
-    image: '/placeholder.svg',
+    coverImage: '/placeholder.svg',
     readTime: '10 min read',
     slug: 'philosophy-digital-consciousness'
   },
@@ -57,7 +57,7 @@ export const samplePosts: Post[] = [
       name: 'Sarah Miller',
       avatar: '/placeholder.svg'
     },
-    image: '/placeholder.svg',
+    coverImage: '/placeholder.svg',
     readTime: '7 min read',
     slug: 'sustainable-living-urban-environments'
   },
@@ -71,7 +71,7 @@ export const samplePosts: Post[] = [
       name: 'David Chen',
       avatar: '/placeholder.svg'
     },
-    image: '/placeholder.svg',
+    coverImage: '/placeholder.svg',
     readTime: '9 min read',
     slug: 'future-work-beyond-office'
   },
@@ -85,7 +85,7 @@ export const samplePosts: Post[] = [
       name: 'Elena Rodriguez',
       avatar: '/placeholder.svg'
     },
-    image: '/placeholder.svg',
+    coverImage: '/placeholder.svg',
     readTime: '11 min read',
     slug: 'reimagining-education-systems'
   }
@@ -95,11 +95,13 @@ interface PostGridProps {
   title?: string;
   description?: string;
   featured?: boolean;
+  posts?: Post[];
 }
 
-const PostGrid: React.FC<PostGridProps> = ({ title, description, featured = false }) => {
+const PostGrid: React.FC<PostGridProps> = ({ title, description, featured = false, posts }) => {
   // For featured view, show only the first 3 posts
-  const displayPosts = featured ? samplePosts.slice(0, 3) : samplePosts;
+  // Use provided posts or fall back to the sample posts
+  const displayPosts = posts || (featured ? samplePosts.slice(0, 3) : samplePosts);
   
   return (
     <section className="py-20">

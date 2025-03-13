@@ -12,6 +12,10 @@ export interface Post {
   date: string;
   readTime: string;
   slug: string;
+  author?: {
+    name: string;
+    avatar: string;
+  };
 }
 
 interface PostCardProps {

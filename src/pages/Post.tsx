@@ -6,7 +6,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import PostGrid from '../components/PostGrid';
 import { samplePosts } from '../components/PostGrid';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Post = () => {
   const { slug } = useParams<{ slug: string }>();
