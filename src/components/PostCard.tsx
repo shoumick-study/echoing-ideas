@@ -1,114 +1,91 @@
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Clock, ArrowUpRight } from 'lucide-react';
+
+export interface Author {
+  name: string;
+  avatar: string;
+}
 
 export interface Post {
   id: string;
   title: string;
   excerpt: string;
-  coverImage: string;
-  category: string;
   date: string;
+  category: string;
+  author?: Author;
+  coverImage: string;
   readTime: string;
   slug: string;
-  author?: {
-    name: string;
-    avatar: string;
-  };
 }
 
 interface PostCardProps {
   post: Post;
-  index: number;
-  featured?: boolean;
+  index?: number;
 }
 
-const PostCard = ({ post, index, featured = false }: PostCardProps) => {
-  const cardRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('animate-fade-in');
-            entry.target.classList.remove('opacity-0');
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    if (cardRef.current) {
-      observer.observe(cardRef.current);
-    }
-
-    return () => {
-      if (cardRef.current) {
-        observer.unobserve(cardRef.current);
-      }
-    };
-  }, []);
-
-  const animationDelay = `${index * 150}ms`;
-
+const PostCard = ({ post, index = 0 }: PostCardProps) => {
+  const delay = index * 100;
+  
   return (
-    <div 
-      ref={cardRef}
-      className={`opacity-0 group hover-card-animation ${
-        featured ? 'col-span-2 row-span-2' : ''
-      }`}
-      style={{ animationDelay }}
+    <Link 
+      to={`/post/${post.slug}`}
+      className="block group"
+      style={{ animationDelay: `${delay}ms` }}
     >
-      <Link to={`/post/${post.slug}`} className="block h-full">
-        <div className="bg-card backdrop-blur-sm border rounded-2xl overflow-hidden h-full transition-all duration-500 ease-out group-hover:shadow-xl group-hover:shadow-primary/10">
-          <div className="aspect-video overflow-hidden relative">
-            <img 
-              src={post.coverImage} 
-              alt={post.title}
-              className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
-              loading="lazy"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-40"></div>
-            <div className="absolute top-3 left-3 transform transition-transform duration-500 group-hover:translate-y-1">
-              <span className="tag-pill glass-effect text-foreground font-medium backdrop-blur-sm">
-                {post.category}
-              </span>
-            </div>
-          </div>
-          
-          <div className="p-6">
-            <div className="flex items-center text-sm text-muted-foreground mb-3">
-              <span>{post.date}</span>
-              <span className="mx-2">•</span>
-              <span className="flex items-center">
-                <Clock size={14} className="mr-1" />
-                {post.readTime}
-              </span>
-            </div>
-            
-            <h3 className={`font-display font-bold tracking-tight mb-3 transition-all duration-300 group-hover:gradient-text ${
-              featured ? 'text-2xl' : 'text-xl'
-            }`}>
-              {post.title}
-            </h3>
-            
-            <p className="text-muted-foreground line-clamp-2 mb-4">
-              {post.excerpt}
-            </p>
-            
-            <div className="flex items-center text-primary font-medium">
-              <span className="relative inline-flex items-center">
-                Read article
-                <ArrowUpRight size={18} className="ml-1 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-[-2px]" />
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary/60 transition-all duration-300 group-hover:w-full"></span>
-              </span>
-            </div>
+      <div className="rounded-xl overflow-hidden shadow-md transition-all duration-300 group-hover:shadow-lg">
+        <div className="relative aspect-video overflow-hidden">
+          <img 
+            src={post.coverImage}
+            alt={post.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          <div className="absolute top-3 left-3">
+            <span className="tag-pill bg-primary/90 text-primary-foreground text-xs">
+              {post.category}
+            </span>
           </div>
         </div>
-      </Link>
-    </div>
+        
+        <div className="p-5">
+          <h3 className="font-display font-bold text-lg mb-2 line-clamp-2 group-hover:text-primary transition-colors">
+            {post.title}
+          </h3>
+          
+          <p className="text-muted-foreground text-sm mb-4 line-clamp-2">
+            {post.excerpt}
+          </p>
+          
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              {post.author && (
+                <div className="flex items-center">
+                  <div className="w-6 h-6 rounded-full overflow-hidden mr-2">
+                    <img 
+                      src={post.author.avatar}
+                      alt={post.author.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <span className="text-xs text-muted-foreground">
+                    {post.author.name}
+                  </span>
+                </div>
+              )}
+              {!post.author && (
+                <span className="text-xs text-muted-foreground">
+                  {post.date}
+                </span>
+              )}
+            </div>
+            
+            <span className="text-xs text-primary font-medium">
+              {post.readTime}
+            </span>
+          </div>
+        </div>
+      </div>
+    </Link>
   );
 };
 

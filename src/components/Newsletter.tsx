@@ -24,33 +24,33 @@ const Newsletter = () => {
   };
 
   return (
-    <section className="py-16 bg-secondary/50">
+    <section className="py-16 bg-white border-t">
       <div className="container-content">
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="headline text-3xl md:text-4xl mb-4">
-            Join the Conversation
+            Stay In The Loop
           </h2>
           <p className="text-lg text-muted-foreground mb-8">
-            Get weekly insights delivered straight to your inbox. 
-            No spam, just thoughtful content that matters.
+            Get weekly tips and strategies delivered straight to your inbox. 
+            No spam, just actionable content to help your business grow.
           </p>
           
-          <form onSubmit={handleSubmit} className="relative max-w-md mx-auto">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
             <input
               type="email"
               placeholder="Your email address"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full px-5 py-3 pr-14 rounded-lg border focus:outline-none focus:ring-2 focus:ring-primary/30 transition-all"
+              className="flex-grow py-3 px-4 rounded-md border border-border focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/30 transition-all"
             />
             <button
               type="submit"
               disabled={isLoading}
-              className="absolute right-1.5 top-1/2 transform -translate-y-1/2 p-2 bg-primary text-white rounded-md transition-colors hover:bg-primary/90 disabled:opacity-70"
-              aria-label="Subscribe"
+              className="btn-subscribe flex items-center justify-center"
             >
-              <Send size={16} className={isLoading ? 'animate-pulse' : ''} />
+              {isLoading ? 'Subscribing...' : 'Subscribe'}
+              <Send size={16} className={`ml-2 ${isLoading ? 'animate-pulse' : ''}`} />
             </button>
           </form>
           
