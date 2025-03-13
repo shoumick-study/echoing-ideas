@@ -1,7 +1,6 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import PostCard, { Post } from './PostCard';
 
 // Sample posts data
@@ -108,12 +107,10 @@ const PostGrid: React.FC<PostGridProps> = ({ title, description, featured = fals
     <section className="py-20">
       <div className="container-content">
         {title && (
-          <h2 className="headline text-3xl md:text-4xl mb-4 animate-fade-up">{title}</h2>
+          <h2 className="headline text-3xl md:text-4xl mb-4">{title}</h2>
         )}
         {description && (
-          <p className="text-muted-foreground mb-12 max-w-2xl animate-fade-up" style={{ animationDelay: '100ms' }}>
-            {description}
-          </p>
+          <p className="text-muted-foreground mb-12 max-w-2xl">{description}</p>
         )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -123,13 +120,12 @@ const PostGrid: React.FC<PostGridProps> = ({ title, description, featured = fals
         </div>
         
         {featured && (
-          <div className="text-center mt-12 animate-fade-up" style={{ animationDelay: '300ms' }}>
+          <div className="text-center mt-12">
             <Link 
               to="/category/all" 
-              className="inline-flex items-center justify-center bg-primary text-primary-foreground px-6 py-3 rounded-lg hover:bg-primary/90 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20"
+              className="inline-flex items-center justify-center bg-primary text-primary-foreground px-6 py-3 rounded-md hover:bg-primary/90 transition-colors"
             >
               View All Articles
-              <ArrowRight size={18} className="ml-2 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         )}

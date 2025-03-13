@@ -51,7 +51,7 @@ const PostCard = ({ post, index, featured = false }: PostCardProps) => {
     };
   }, []);
 
-  const animationDelay = `${index * 150}ms`;
+  const animationDelay = `${index * 100}ms`;
 
   return (
     <div 
@@ -62,17 +62,17 @@ const PostCard = ({ post, index, featured = false }: PostCardProps) => {
       style={{ animationDelay }}
     >
       <Link to={`/post/${post.slug}`} className="block h-full">
-        <div className="bg-card backdrop-blur-sm border rounded-2xl overflow-hidden h-full transition-all duration-500 ease-out group-hover:shadow-xl group-hover:shadow-primary/10">
+        <div className="bg-card backdrop-blur-sm border rounded-[1.25rem] overflow-hidden h-full transition-all duration-300 hover:shadow-xl">
           <div className="aspect-video overflow-hidden relative">
             <img 
               src={post.coverImage} 
               alt={post.title}
-              className="w-full h-full object-cover transform transition-transform duration-700 group-hover:scale-110"
+              className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-40"></div>
-            <div className="absolute top-3 left-3 transform transition-transform duration-500 group-hover:translate-y-1">
-              <span className="tag-pill glass-effect text-foreground font-medium backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent opacity-30"></div>
+            <div className="absolute top-3 left-3">
+              <span className="tag-pill glass-effect text-foreground backdrop-blur-sm">
                 {post.category}
               </span>
             </div>
@@ -88,7 +88,7 @@ const PostCard = ({ post, index, featured = false }: PostCardProps) => {
               </span>
             </div>
             
-            <h3 className={`font-display font-bold tracking-tight mb-3 transition-all duration-300 group-hover:gradient-text ${
+            <h3 className={`font-display font-bold tracking-tight mb-3 transition-colors group-hover:gradient-text ${
               featured ? 'text-2xl' : 'text-xl'
             }`}>
               {post.title}
@@ -99,11 +99,8 @@ const PostCard = ({ post, index, featured = false }: PostCardProps) => {
             </p>
             
             <div className="flex items-center text-primary font-medium">
-              <span className="relative inline-flex items-center">
-                Read article
-                <ArrowUpRight size={18} className="ml-1 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-[-2px]" />
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary/60 transition-all duration-300 group-hover:w-full"></span>
-              </span>
+              Read article
+              <ArrowUpRight size={18} className="ml-1 transition-transform group-hover:translate-x-1 group-hover:translate-y-[-2px]" />
             </div>
           </div>
         </div>
