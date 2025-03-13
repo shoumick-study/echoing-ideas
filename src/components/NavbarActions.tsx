@@ -8,10 +8,10 @@ const NavbarActions = () => {
     <div className="flex items-center gap-2">
       <Link
         to="/create"
-        className="hidden md:inline-flex items-center justify-center bg-primary text-primary-foreground hover:bg-primary/90 px-4 py-2 rounded-md transition-colors font-medium text-sm"
+        className="inline-flex items-center justify-center bg-primary/10 text-primary hover:bg-primary/20 px-4 py-2 rounded-lg transition-colors"
       >
-        <PenSquare size={16} className="mr-2" />
-        Write
+        <PenSquare size={18} className="mr-2" />
+        Create Post
       </Link>
     </div>
   );

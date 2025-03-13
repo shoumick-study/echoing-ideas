@@ -1,20 +1,19 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Search, Menu, X } from 'lucide-react';
-import Logo from './Logo';
-import MainNav from './MainNav';
-import NavbarActions from './NavbarActions';
-import { useMobile } from '@/hooks/use-mobile';
 
 const Navbar = () => {
-  const isMobile = useMobile();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 10);
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -22,49 +21,82 @@ const Navbar = () => {
   }, []);
 
   return (
-    <header className={`site-header transition-all duration-300 ${isScrolled ? 'py-3' : 'py-5'}`}>
-      <div className="container-content">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <Logo />
-          </div>
-
-          <MainNav />
-
-          <div className="flex items-center space-x-4">
-            <button className="p-2 rounded-full hover:bg-muted/80 text-foreground transition-colors">
-              <Search size={20} />
-            </button>
-            <NavbarActions />
-            
-            {isMobile && (
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 md:hidden"
-                aria-label="Toggle menu"
-              >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-              </button>
-            )}
-          </div>
+    <nav 
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
+        isScrolled ? 'bg-white/90 backdrop-blur-md shadow-sm' : 'bg-transparent'
+      }`}
+    >
+      <div className="container-content h-16 flex items-center justify-between">
+        <Link to="/" className="text-2xl font-display font-bold tracking-tight">
+          Thoughts
+        </Link>
+        
+        <div className="hidden md:flex items-center space-x-8">
+          <Link to="/" className="font-medium hover:text-primary/80 transition-colors">
+            Home
+          </Link>
+          <Link to="/category/all" className="font-medium hover:text-primary/80 transition-colors">
+            All Posts
+          </Link>
+          <Link to="/about" className="font-medium hover:text-primary/80 transition-colors">
+            About
+          </Link>
+          <button 
+            className="p-2 rounded-full hover:bg-muted transition-colors"
+            aria-label="Search"
+          >
+            <Search size={20} />
+          </button>
         </div>
         
-        {/* Mobile menu */}
-        {isMobile && mobileMenuOpen && (
-          <div className="md:hidden py-4 mt-4 border-t border-border">
-            <div className="flex flex-col space-y-3">
-              <Link to="/category/e-commerce" className="nav-link">E-Commerce</Link>
-              <Link to="/category/marketing" className="nav-link">Marketing</Link>
-              <Link to="/category/blogging" className="nav-link">Blogging</Link>
-              <Link to="/category/make-money" className="nav-link">Make Money</Link>
-              <Link to="/category/stories" className="nav-link">Stories</Link>
-              <Link to="/category/help-guides" className="nav-link">Help & Guides</Link>
-              <Link to="/create" className="nav-link text-primary font-medium">Create Post</Link>
-            </div>
-          </div>
-        )}
+        <button 
+          className="p-2 rounded-full hover:bg-muted transition-colors md:hidden"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
-    </header>
+
+      {/* Mobile menu */}
+      <div 
+        className={`md:hidden absolute w-full bg-white/95 backdrop-blur-md transition-all duration-300 ease-in-out overflow-hidden ${
+          mobileMenuOpen ? 'max-h-60 shadow-md' : 'max-h-0'
+        }`}
+      >
+        <div className="container-content py-4 flex flex-col space-y-4">
+          <Link 
+            to="/" 
+            className="font-medium py-2 hover:text-primary/80 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Home
+          </Link>
+          <Link 
+            to="/category/all" 
+            className="font-medium py-2 hover:text-primary/80 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            All Posts
+          </Link>
+          <Link 
+            to="/about" 
+            className="font-medium py-2 hover:text-primary/80 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            About
+          </Link>
+          <div className="py-2 flex items-center border rounded-full px-4">
+            <Search size={18} className="text-muted-foreground mr-2" />
+            <input
+              type="text"
+              placeholder="Search articles..."
+              className="w-full bg-transparent outline-none"
+            />
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 };
 

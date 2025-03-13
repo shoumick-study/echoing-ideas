@@ -97,16 +97,9 @@ interface PostGridProps {
   description?: string;
   featured?: boolean;
   posts?: Post[];
-  viewAllLink?: string;
 }
 
-const PostGrid: React.FC<PostGridProps> = ({ 
-  title, 
-  description, 
-  featured = false, 
-  posts,
-  viewAllLink = "/category/all"
-}) => {
+const PostGrid: React.FC<PostGridProps> = ({ title, description, featured = false, posts }) => {
   // For featured view, show only the first 3 posts
   // Use provided posts or fall back to the sample posts
   const displayPosts = posts || (featured ? samplePosts.slice(0, 3) : samplePosts);
@@ -115,26 +108,12 @@ const PostGrid: React.FC<PostGridProps> = ({
     <section className="py-20">
       <div className="container-content">
         {title && (
-          <div className="flex items-end justify-between mb-10 border-b pb-4">
-            <div>
-              <h2 className="headline text-2xl md:text-3xl">{title}</h2>
-              {description && (
-                <p className="text-muted-foreground max-w-2xl mt-2">
-                  {description}
-                </p>
-              )}
-            </div>
-            
-            {featured && viewAllLink && (
-              <Link 
-                to={viewAllLink} 
-                className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
-              >
-                View All
-                <ArrowRight size={16} className="ml-1" />
-              </Link>
-            )}
-          </div>
+          <h2 className="headline text-3xl md:text-4xl mb-4 animate-fade-up">{title}</h2>
+        )}
+        {description && (
+          <p className="text-muted-foreground mb-12 max-w-2xl animate-fade-up" style={{ animationDelay: '100ms' }}>
+            {description}
+          </p>
         )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
@@ -143,7 +122,7 @@ const PostGrid: React.FC<PostGridProps> = ({
           ))}
         </div>
         
-        {featured && !title && (
+        {featured && (
           <div className="text-center mt-12 animate-fade-up" style={{ animationDelay: '300ms' }}>
             <Link 
               to="/category/all" 
