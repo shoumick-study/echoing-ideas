@@ -9,6 +9,7 @@ import { HelmetProvider } from "react-helmet-async";
 import Index from "./pages/Index";
 import Post from "./pages/Post";
 import Category from "./pages/Category";
+import CreatePost from "./pages/CreatePost";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/post/:slug" element={<Post />} />
             <Route path="/category/:category" element={<Category />} />
+            <Route path="/create" element={<CreatePost />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
