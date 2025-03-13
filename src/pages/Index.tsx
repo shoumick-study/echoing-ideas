@@ -5,7 +5,7 @@ import PostGrid from '../components/PostGrid';
 import Newsletter from '../components/Newsletter';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Index = () => {
   useEffect(() => {

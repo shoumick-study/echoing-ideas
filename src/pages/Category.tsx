@@ -6,7 +6,7 @@ import Footer from '../components/Footer';
 import PostCard, { Post } from '../components/PostCard';
 import { samplePosts } from '../components/PostGrid';
 import Newsletter from '../components/Newsletter';
-import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet-async';
 
 const Category = () => {
   const { category } = useParams<{ category: string }>();

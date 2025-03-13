@@ -1,106 +1,132 @@
 
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PostCard, { Post } from './PostCard';
 
-// Sample post data
+// Sample posts data
 export const samplePosts: Post[] = [
   {
     id: '1',
-    title: 'The Evolution of Human Consciousness',
-    excerpt: 'Exploring how human consciousness evolved and what it means for our understanding of reality and perception.',
-    coverImage: 'https://images.unsplash.com/photo-1519681393784-d120267933ba',
-    category: 'Philosophy',
-    date: 'Apr 12, 2023',
+    title: 'The Ethical Implications of AI Development',
+    excerpt: 'Exploring the moral questions that arise as artificial intelligence becomes more advanced and autonomous.',
+    date: 'March 15, 2023',
+    category: 'Technology',
+    author: {
+      name: 'Alex Johnson',
+      avatar: '/placeholder.svg'
+    },
+    image: '/placeholder.svg',
     readTime: '8 min read',
-    slug: 'evolution-of-human-consciousness',
+    slug: 'ethical-implications-ai-development'
   },
   {
     id: '2',
-    title: 'Artificial Intelligence: Promise or Peril?',
-    excerpt: 'A nuanced look at the potential benefits and risks of advanced AI systems in society.',
-    coverImage: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485',
-    category: 'Technology',
-    date: 'Mar 28, 2023',
+    title: 'Economic Models in a Post-Pandemic World',
+    excerpt: 'Analyzing how traditional economic frameworks are evolving in response to global disruptions.',
+    date: 'February 28, 2023',
+    category: 'Economics',
+    author: {
+      name: 'Maya Patel',
+      avatar: '/placeholder.svg'
+    },
+    image: '/placeholder.svg',
     readTime: '6 min read',
-    slug: 'ai-promise-or-peril',
+    slug: 'economic-models-post-pandemic'
   },
   {
     id: '3',
-    title: 'The Future of Remote Work',
-    excerpt: 'How distributed work models are reshaping organizational structures and work-life balance.',
-    coverImage: 'https://images.unsplash.com/photo-1591382696684-38c427c7547a',
-    category: 'Future',
-    date: 'Mar 15, 2023',
-    readTime: '5 min read',
-    slug: 'future-of-remote-work',
+    title: 'The Philosophy of Digital Consciousness',
+    excerpt: 'Examining the metaphysical questions surrounding artificial consciousness and digital beings.',
+    date: 'January 22, 2023',
+    category: 'Philosophy',
+    author: {
+      name: 'Thomas Wu',
+      avatar: '/placeholder.svg'
+    },
+    image: '/placeholder.svg',
+    readTime: '10 min read',
+    slug: 'philosophy-digital-consciousness'
   },
   {
     id: '4',
-    title: 'Understanding Modern Monetary Theory',
-    excerpt: 'A deep dive into the controversial economic framework reshaping policy debates.',
-    coverImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3',
-    category: 'Economics',
-    date: 'Feb 18, 2023',
-    readTime: '10 min read',
-    slug: 'understanding-modern-monetary-theory',
+    title: 'Sustainable Living in Urban Environments',
+    excerpt: 'Practical approaches to environmentally conscious living within modern city landscapes.',
+    date: 'December 10, 2022',
+    category: 'Wellness',
+    author: {
+      name: 'Sarah Miller',
+      avatar: '/placeholder.svg'
+    },
+    image: '/placeholder.svg',
+    readTime: '7 min read',
+    slug: 'sustainable-living-urban-environments'
   },
   {
     id: '5',
-    title: 'The Science of Mindfulness',
-    excerpt: 'How mindfulness practices affect our brains and why they're increasingly important in digital age.',
-    coverImage: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773',
-    category: 'Wellness',
-    date: 'Jan 30, 2023',
-    readTime: '7 min read',
-    slug: 'science-of-mindfulness',
+    title: 'The Future of Work: Beyond the Office',
+    excerpt: 'How remote work is reshaping career trajectories, company structures, and personal fulfillment.',
+    date: 'November 5, 2022',
+    category: 'Future',
+    author: {
+      name: 'David Chen',
+      avatar: '/placeholder.svg'
+    },
+    image: '/placeholder.svg',
+    readTime: '9 min read',
+    slug: 'future-work-beyond-office'
   },
   {
     id: '6',
-    title: 'Digital Privacy in the Surveillance Age',
-    excerpt: 'Examining the erosion of privacy and what it means for individual autonomy.',
-    coverImage: 'https://images.unsplash.com/photo-1563237023-b1e970526dcb',
-    category: 'Technology',
-    date: 'Jan 12, 2023',
-    readTime: '9 min read',
-    slug: 'digital-privacy-surveillance-age',
-  },
+    title: 'Reimagining Education Systems',
+    excerpt: 'Critical analysis of current educational paradigms and visions for more effective learning models.',
+    date: 'October 18, 2022',
+    category: 'Philosophy',
+    author: {
+      name: 'Elena Rodriguez',
+      avatar: '/placeholder.svg'
+    },
+    image: '/placeholder.svg',
+    readTime: '11 min read',
+    slug: 'reimagining-education-systems'
+  }
 ];
 
 interface PostGridProps {
-  posts?: Post[];
   title?: string;
   description?: string;
   featured?: boolean;
 }
 
-const PostGrid = ({ 
-  posts = samplePosts,
-  title = "Latest Articles", 
-  description,
-  featured = false
-}: PostGridProps) => {
+const PostGrid: React.FC<PostGridProps> = ({ title, description, featured = false }) => {
+  // For featured view, show only the first 3 posts
+  const displayPosts = featured ? samplePosts.slice(0, 3) : samplePosts;
+  
   return (
-    <section className="py-16 relative">
+    <section className="py-20">
       <div className="container-content">
-        <div className="mb-12">
+        {title && (
           <h2 className="headline text-3xl md:text-4xl mb-4">{title}</h2>
-          {description && (
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              {description}
-            </p>
-          )}
-        </div>
+        )}
+        {description && (
+          <p className="text-muted-foreground mb-12 max-w-2xl">{description}</p>
+        )}
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {posts.map((post, index) => (
-            <PostCard 
-              key={post.id} 
-              post={post} 
-              index={index} 
-              featured={index === 0 && featured}
-            />
+          {displayPosts.map((post, index) => (
+            <PostCard key={post.id} post={post} index={index} />
           ))}
         </div>
+        
+        {featured && (
+          <div className="text-center mt-12">
+            <Link 
+              to="/category/all" 
+              className="inline-flex items-center justify-center bg-primary text-primary-foreground px-6 py-3 rounded-md hover:bg-primary/90 transition-colors"
+            >
+              View All Articles
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   );
